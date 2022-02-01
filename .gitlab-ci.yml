@@ -1,0 +1,52 @@
+variables:
+    REPO: trasioteam/teep-dev
+
+before_script:
+    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWD}
+
+teep-dev-doxygen:
+    variables:
+        BRANCH: suit-dev
+    tags:
+        - shell117
+    script:
+        - docker pull trasioteam/taref-dev:doxygen
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/suit-dev
+        - docker push ${REPO}:doxygen
+        # - docker run --name $CI_PIPELINE_ID -d ${REPO}:doxygen
+        # - docker wait $CI_PIPELINE_ID
+        # - docker cp $CI_PIPELINE_ID:${TA_REF_DOCS_DIR}/${TA_REF_PDF} $CI_PROJECT_DIR/${TA_REF_PDF}
+    artifacts:
+        paths:
+            - $CI_PROJECT_DIR/${TA_REF_PDF}
+        expire_in: 1 week
+
+teep-dev-sgx:
+    variables:
+        BRANCH: suit-dev
+    tags:
+        - shell115
+    script:
+        - docker pull trasioteam/taref-dev:sgx
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:sgx ./sgx/suit-dev
+        - docker push ${REPO}:sgx
+
+teep-dev-optee:
+    variables:
+        BRANCH: suit-dev
+    tags:
+        - shell117
+    script:
+        - docker pull trasioteam/taref-dev:optee
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:optee ./optee/suit-dev
+        - docker push ${REPO}:optee
+
+teep-dev-keystone:
+    variables:
+        BRANCH: suit-dev
+    tags:
+        - shell121
+    script:
+        - docker pull trasioteam/taref-dev:keystone
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:keystone ./keystone/suit-dev
+        - docker push ${REPO}:keystone

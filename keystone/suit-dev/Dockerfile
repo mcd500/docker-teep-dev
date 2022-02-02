@@ -41,4 +41,4 @@ RUN make
 
 # Test the teep device
 # This step needs tamproto to be executed
-RUN make test
+# RUN make test

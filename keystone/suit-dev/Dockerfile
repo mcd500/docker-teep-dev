@@ -39,10 +39,8 @@ WORKDIR $TEEP_DEV_DIR
 # Build the teep device
 RUN make
 
-ENV TAMIP=`python3 -c 'import socket;print(socket.gethostbyname("tamproto"))'`
-RUN curl "http://$TAMIP:8888/api/tam"
-
 # Test the teep device
 # This step needs tamproto to be executed
-RUN make test TAM_URL="http://$TAMIP:8888" | tr -d "\r"
+ARG TAMIP=
+RUN make test TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
 

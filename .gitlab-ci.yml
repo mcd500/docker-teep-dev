@@ -46,7 +46,8 @@ teep-dev-optee:
         - shell117
     script:
         - docker pull trasioteam/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:optee ./optee/suit-dev
+        - TAMIP=`python3 -c 'import socket;print(socket.gethostbyname("tamproto"))'`
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg DEBUG_DATE=${TAMIP} --rm -t ${REPO}:optee ./optee/suit-dev
         - docker push ${REPO}:optee
 
 teep-dev-keystone:

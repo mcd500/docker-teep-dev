@@ -35,6 +35,8 @@ RUN git submodule sync --recursive && git submodule update --init --recursive
 # Set the workdir
 WORKDIR $TEEP_DEV_DIR
 
+CMD python3 -c 'import socket;print(socket.gethostbyname("tamproto"))
+
 
 # Build the teep device
 RUN make

@@ -4,14 +4,17 @@ variables:
     TEEP_DEV_PDF: teep-device.pdf
     DOCKER_TAMPROTO_IMAGE: docker.io/trasioteam/tamproto
 
-.tamproto_service: &tamproto_service
-    services:
-        - name: ${DOCKER_TAMPROTO_IMAGE}:latest
-          alias: tamproto
-
-
 before_script:
     - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWD}
+
+
+.tamproto_service: &tamproto_service
+    before_script:
+        - docker run --rm --name tamproto --detach trasioteam/tamproto:latest
+        - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tamproto)
+    after_script:
+        - docker stop tamproto
+
 
 teep-dev-doxygen:
     variables:
@@ -44,6 +47,7 @@ teep-dev-sgx:
         - docker push ${REPO}:sgx
 
 teep-dev-optee:
+    <<: *tamproto_service
     variables:
         BRANCH: suit-dev
     services:
@@ -53,7 +57,7 @@ teep-dev-optee:
         - shell117
     script:
         - docker pull trasioteam/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP="172.17.0.4" --rm -t ${REPO}:optee ./optee/suit-dev
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/suit-dev
         - docker push ${REPO}:optee
 
 teep-dev-keystone:

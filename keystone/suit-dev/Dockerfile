@@ -35,7 +35,6 @@ RUN git submodule sync --recursive && git submodule update --init --recursive
 # Set the workdir
 WORKDIR $TEEP_DEV_DIR
 
-
 # Build the teep device
 RUN make
 

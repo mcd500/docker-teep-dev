@@ -63,8 +63,9 @@ teep-dev-keystone:
     tags:
         - shell121
     script:
-        - docker info
-        - docker service ls
+        - docker run --rm --name tamproto --detach trasioteam/tamproto:latest)
+        - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tamproto)
         - docker pull trasioteam/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP="172.17.0.4" --rm -t ${REPO}:keystone ./keystone/suit-dev
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/suit-dev
         - docker push ${REPO}:keystone
+        - docker stop tamproto

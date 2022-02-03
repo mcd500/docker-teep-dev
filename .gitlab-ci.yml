@@ -2,7 +2,6 @@ variables:
     REPO: trasioteam/teep-dev
     TEEP_DEV_DOCS_DIR: /home/user/teep-device/docs
     TEEP_DEV_PDF: teep-device.pdf
-    DOCKER_TAMPROTO_IMAGE: docker.io/trasioteam/tamproto
 
 stages:
     - build
@@ -11,7 +10,7 @@ stages:
 before_script:
     - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWD}
 
-
+# Template for tamproto service
 .tamproto_service: &tamproto_service
     before_script:
         - docker run --rm --name tamproto --detach ${REPO}:tamproto
@@ -19,6 +18,7 @@ before_script:
     after_script:
         - docker stop tamproto
 
+# Job for tamproto
 teep-dev-tamproto:
     variables:
         BRANCH: master
@@ -29,6 +29,7 @@ teep-dev-tamproto:
         - docker build --build-arg BRANCH=${BRANCH} --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:tamproto ./tamproto/master
         - docker push ${REPO}:tamproto
 
+# Job for doxygen
 teep-dev-doxygen:
     variables:
         BRANCH: suit-dev
@@ -47,6 +48,7 @@ teep-dev-doxygen:
             - $CI_PROJECT_DIR/${TEEP_DEV_PDF}
         expire_in: 1 week
 
+# Job for sgx
 teep-dev-sgx:
     <<: *tamproto_service
     variables:
@@ -59,6 +61,7 @@ teep-dev-sgx:
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/suit-dev
         - docker push ${REPO}:sgx
 
+# Job for optee
 teep-dev-optee:
     <<: *tamproto_service
     variables:
@@ -71,6 +74,7 @@ teep-dev-optee:
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/suit-dev
         - docker push ${REPO}:optee
 
+# Job for keystone
 teep-dev-keystone:
     <<: *tamproto_service
     variables:

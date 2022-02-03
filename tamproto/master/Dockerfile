@@ -17,18 +17,16 @@ RUN echo https://gitlab-ci-token:${CI_JOB_TOKEN}@192.168.100.100 >> ~/.git-crede
 # Set TAMPROTO_DIR dir
 ENV TAMPROTO_DIR=${USER_DIR}/tamproto
 
-# Clone the ta-ref and the given branch
+# Clone the tamproto and checkout the given branch
 ARG BRANCH=
 RUN git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@192.168.100.100/rinkai/tamproto.git
 WORKDIR $TAMPROTO_DIR
 RUN git checkout ${BRANCH}
 
-######################################################
-# Perform the steps as per tamproto dockerfile below #
-######################################################
+###########################################################
+# Perform the steps as per tamproto repo dockerfile below #
+###########################################################
 
-# Copyright (c) 2020 SECOM CO., LTD. All Rights reserved.
-# SPDX-License-Identifier: BSD-2-Clause
 FROM node:10.18-alpine as slim
 
 # Set TAMPROTO_DIR dir
@@ -41,12 +39,13 @@ ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
 # COPY package.json /usr/src/app/
+
 RUN apk add --no-cache --virtual .gyp python make g++ \
     && apk --no-cache add avahi-dev \
     && npm install \
     && apk del .gyp
 
-COPY . /usr/src/app
+# COPY . /usr/src/app
 
 ENV PORT 8888
 EXPOSE $PORT

@@ -26,6 +26,9 @@ teep-dev-doxygen:
 teep-dev-sgx:
     variables:
         BRANCH: suit-dev
+    services:
+        - name: docker.io/trasioteam/tamproto:latest
+          alias: tamproto
     tags:
         - shell115
     script:
@@ -36,6 +39,9 @@ teep-dev-sgx:
 teep-dev-optee:
     variables:
         BRANCH: suit-dev
+    services:
+        - name: docker.io/trasioteam/tamproto:latest
+          alias: tamproto
     tags:
         - shell117
     script:
@@ -46,6 +52,9 @@ teep-dev-optee:
 teep-dev-keystone:
     variables:
         BRANCH: suit-dev
+    services:
+        - name: docker.io/trasioteam/tamproto:latest
+          alias: tamproto
     tags:
         - shell121
     script:

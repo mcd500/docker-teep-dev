@@ -26,7 +26,7 @@ teep-dev-tamproto:
     tags:
         - shell115
     script:
-        - docker build --build-arg BRANCH=${BRANCH} --rm -t ${REPO}:tamproto ./tamproto/master
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:tamproto ./tamproto/master
         - docker push ${REPO}:tamproto
 
 teep-dev-doxygen:

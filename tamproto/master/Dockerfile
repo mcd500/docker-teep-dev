@@ -3,6 +3,9 @@
 FROM node:10.18-alpine AS build
 # TO trasioteam/teep-dev:tamproto
 
+RUN apt-get update \
+ && apt-get install -y git
+
 # For fetching teep-device.git
 ARG CI_JOB_TOKEN=
 RUN git config --global user.name gitlab-ci-token

@@ -1,6 +1,6 @@
 # Copyright (c) 2020 SECOM CO., LTD. All Rights reserved.
 # SPDX-License-Identifier: BSD-2-Clause
-FROM aistcpsec/tee-distro-dev:doxygen-20.04 AS build
+FROM aistcpsec/tee-distro-dev:doxygen-20.04 AS builder
 # TO trasioteam/teep-dev:tamproto
 
 # Make sure the following command run as build-user
@@ -27,21 +27,28 @@ RUN git checkout ${BRANCH}
 # Perform the steps as per tamproto dockerfile below #
 ######################################################
 
-# Set TAMPROTO_APP_DIR dir
-ENV TAMPROTO_APP_DIR=${USER_DIR}/app
+# Copyright (c) 2020 SECOM CO., LTD. All Rights reserved.
+# SPDX-License-Identifier: BSD-2-Clause
+FROM node:10.18-alpine as slim
 
-WORKDIR TAMPROTO_APP_DIR
+# Set TAMPROTO_DIR dir
+ENV TAMPROTO_DIR=/home/user/tamproto
+
+# Copy the tamproto from builder
+COPY --from=builder ${TAMPROTO_DIR} .
+
+WORKDIR /usr/src/app
 
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
-COPY package.json ${TAMPROTO_APP_DIR}
+COPY package.json /usr/src/app/
 RUN apk add --no-cache --virtual .gyp python make g++ \
     && apk --no-cache add avahi-dev \
     && npm install \
     && apk del .gyp
 
-COPY . ${TAMPROTO_APP_DIR}
+COPY . /usr/src/app
 
 ENV PORT 8888
 EXPOSE $PORT

@@ -4,23 +4,37 @@ variables:
     TEEP_DEV_PDF: teep-device.pdf
     DOCKER_TAMPROTO_IMAGE: docker.io/trasioteam/tamproto
 
+stages:
+    - build
+    - test
+
 before_script:
     - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWD}
 
 
 .tamproto_service: &tamproto_service
     before_script:
-        - docker run --rm --name tamproto --detach trasioteam/tamproto:latest
+        - docker run --rm --name tamproto --detach ${REPO}:tamproto
         - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tamproto)
     after_script:
         - docker stop tamproto
 
+teep-dev-tamproto:
+    variables:
+        BRANCH: master
+    stage: build
+    tags:
+        - shell115
+    script:
+        - docker build --build-arg BRANCH=${BRANCH} --rm -t ${REPO}:tamproto ./tamproto/master
+        - docker push ${REPO}:tamproto
 
 teep-dev-doxygen:
     variables:
         BRANCH: suit-dev
     tags:
         - shell117
+    stage: build
     script:
         - docker pull trasioteam/taref-dev:doxygen
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/suit-dev
@@ -39,6 +53,7 @@ teep-dev-sgx:
         BRANCH: suit-dev
     tags:
         - shell115
+    stage: test
     script:
         - docker pull trasioteam/taref-dev:sgx
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/suit-dev
@@ -50,6 +65,7 @@ teep-dev-optee:
         BRANCH: suit-dev
     tags:
         - shell117
+    stage: test
     script:
         - docker pull trasioteam/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/suit-dev
@@ -61,6 +77,7 @@ teep-dev-keystone:
         BRANCH: suit-dev
     tags:
         - shell121
+    stage: test
     script:
         - docker pull trasioteam/taref-dev:keystone
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/suit-dev

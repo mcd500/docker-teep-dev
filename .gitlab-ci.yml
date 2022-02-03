@@ -56,7 +56,7 @@ teep-dev-optee:
         - docker push ${REPO}:optee
 
 teep-dev-keystone:
-    <: *tamproto_service
+    <<: *tamproto_service
     variables:
         BRANCH: suit-dev
     tags:

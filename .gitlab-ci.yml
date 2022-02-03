@@ -2,6 +2,13 @@ variables:
     REPO: trasioteam/teep-dev
     TEEP_DEV_DOCS_DIR: /home/user/teep-device/docs
     TEEP_DEV_PDF: teep-device.pdf
+    DOCKER_TAMPROTO_IMAGE: docker.io/trasioteam/tamproto
+
+.tamproto_service: &tamproto_service
+    services:
+        - name: ${DOCKER_TAMPROTO_IMAGE}:latest
+          alias: tamproto
+
 
 before_script:
     - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWD}
@@ -50,14 +57,14 @@ teep-dev-optee:
         - docker push ${REPO}:optee
 
 teep-dev-keystone:
+    <<: *tamproto_service
     variables:
         BRANCH: suit-dev
-    services:
-        - name: docker.io/trasioteam/tamproto:latest
-          alias: tamproto
     tags:
         - shell121
     script:
+        - docker info
+        - docker service ls
         - docker pull trasioteam/taref-dev:keystone
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP="172.17.0.4" --rm -t ${REPO}:keystone ./keystone/suit-dev
         - docker push ${REPO}:keystone

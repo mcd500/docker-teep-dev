@@ -2,6 +2,7 @@ variables:
     REPO: trasioteam/teep-dev
     TEEP_DEV_DOCS_DIR: /home/user/teep-device/docs
     TEEP_DEV_PDF: teep-device.pdf
+    TEEP_HTML_PKG: html_readme.tar.gz
 
 stages:
     - build
@@ -46,6 +47,7 @@ teep-dev-doxygen:
     artifacts:
         paths:
             - $CI_PROJECT_DIR/${TEEP_DEV_PDF}
+            - $CI_PROJECT_DIR/${TEEP_HTML_PKG}
         expire_in: 1 week
 
 # Job for sgx

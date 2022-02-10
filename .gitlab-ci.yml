@@ -55,37 +55,37 @@ teep-dev-doxygen:
 teep-dev-sgx:
     <<: *tamproto_service
     variables:
-        BRANCH: suit-dev
+        BRANCH: master
     tags:
         - shell115
     stage: test
     script:
         - docker pull trasioteam/taref-dev:sgx
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/suit-dev
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
         - docker push ${REPO}:sgx
 
 # Job for optee
 teep-dev-optee:
     <<: *tamproto_service
     variables:
-        BRANCH: suit-dev
+        BRANCH: master
     tags:
         - shell117
     stage: test
     script:
         - docker pull trasioteam/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/suit-dev
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
         - docker push ${REPO}:optee
 
 # Job for keystone
 teep-dev-keystone:
     <<: *tamproto_service
     variables:
-        BRANCH: suit-dev
+        BRANCH: master
     tags:
         - shell121
     stage: test
     script:
         - docker pull trasioteam/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/suit-dev
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
         - docker push ${REPO}:keystone

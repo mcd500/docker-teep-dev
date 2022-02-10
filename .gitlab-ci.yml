@@ -2,7 +2,7 @@ variables:
     REPO: trasioteam/teep-dev
     TEEP_DEV_DOCS_DIR: /home/user/teep-device/docs
     TEEP_DEV_PDF: teep-device.pdf
-    TEEP_HTML_PKG: html_readme.tar.gz
+    TEEP_HTML_PKG: teep-device_readme_html.tar.gz
 
 stages:
     - build

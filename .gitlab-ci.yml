@@ -33,13 +33,13 @@ teep-dev-tamproto:
 # Job for doxygen
 teep-dev-doxygen:
     variables:
-        BRANCH: suit-dev
+        BRANCH: master
     tags:
         - shell117
     stage: build
     script:
         - docker pull trasioteam/taref-dev:doxygen
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/suit-dev
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/${BRANCH}
         - docker push ${REPO}:doxygen
         - docker run --name $CI_PIPELINE_ID -d ${REPO}:doxygen
         - docker wait $CI_PIPELINE_ID

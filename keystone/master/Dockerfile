@@ -24,13 +24,8 @@ ARG BRANCH=
 RUN git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@192.168.100.100/rinkai/teep-device.git
 WORKDIR $TEEP_DEV_DIR
 RUN git checkout ${BRANCH}
-RUN git submodule sync --recursive && git submodule update --init --recursive
-
-#RUN git clone https://192.168.100.100/rinkai/teep-device.git && \
-#    cd ${TEEP_DEV_DIR} && \
-#    git checkout ${BRANCH} && \
-#    git submodule sync --recursive && \
-#    git submodule update --init --recursive
+RUN git submodule sync --recursive && \
+    git submodule update --init --recursive
 
 # Set the workdir
 WORKDIR $TEEP_DEV_DIR

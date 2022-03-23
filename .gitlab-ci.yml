@@ -74,7 +74,7 @@ teep-dev-optee:
     stage: test
     script:
         - docker pull trasioteam/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
+        - docker build --no-cache --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
         - docker push ${REPO}:optee
 
 # Job for keystone
@@ -87,5 +87,5 @@ teep-dev-keystone:
     stage: test
     script:
         - docker pull trasioteam/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
+        - docker build --no-cache --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
         - docker push ${REPO}:keystone

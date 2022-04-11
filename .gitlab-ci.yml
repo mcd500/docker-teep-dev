@@ -75,7 +75,7 @@ teep-dev-sgx-wip:
     stage: test
     script:
         - docker pull trasioteam/taref-dev:sgx
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/branch-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx-wip ./sgx/branch-wip
         - docker push ${REPO}:sgx-wip
 
 # Job for optee
@@ -101,7 +101,7 @@ teep-dev-optee-wip:
     stage: test
     script:
         - docker pull trasioteam/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/branch-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee-wip ./optee/branch-wip
         - docker push ${REPO}:optee-wip
 
 # Job for keystone
@@ -127,5 +127,5 @@ teep-dev-keystone-wip:
     stage: test
     script:
         - docker pull trasioteam/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/branch-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip ./keystone/branch-wip
         - docker push ${REPO}:keystone-wip

@@ -65,7 +65,7 @@ teep-dev-sgx:
         - docker push ${REPO}:sgx
 
 # Job for sgx, branch wip
-teep-dev-sgx:
+teep-dev-sgx-wip:
     <<: *tamproto_service
     variables:
         BRANCH: cleanup-before-publish
@@ -73,9 +73,9 @@ teep-dev-sgx:
         - shell115
     stage: test
     script:
-        - docker pull trasioteam/taref-dev:sgx
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
-        - docker push ${REPO}:sgx
+        - docker pull trasioteam/taref-dev:sgx-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/branch-wip
+        - docker push ${REPO}:sgx-wip
 
 # Job for optee
 teep-dev-optee:
@@ -91,7 +91,7 @@ teep-dev-optee:
         - docker push ${REPO}:optee
 
 # Job for optee, branch wip
-teep-dev-optee:
+teep-dev-optee-wip:
     <<: *tamproto_service
     variables:
         BRANCH: cleanup-before-publish
@@ -99,9 +99,9 @@ teep-dev-optee:
         - shell117
     stage: test
     script:
-        - docker pull trasioteam/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
-        - docker push ${REPO}:optee
+        - docker pull trasioteam/taref-dev:optee-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/branch-wip
+        - docker push ${REPO}:optee-wip
 
 # Job for keystone
 teep-dev-keystone:
@@ -117,7 +117,7 @@ teep-dev-keystone:
         - docker push ${REPO}:keystone
 
 # Job for keystone, branch wip
-teep-dev-keystone:
+teep-dev-keystone-wip:
     <<: *tamproto_service
     variables:
         BRANCH: cleanup-before-publish
@@ -125,6 +125,6 @@ teep-dev-keystone:
         - shell121
     stage: test
     script:
-        - docker pull trasioteam/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
-        - docker push ${REPO}:keystone
+        - docker pull trasioteam/taref-dev:keystone-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/branch-wip
+        - docker push ${REPO}:keystone-wip

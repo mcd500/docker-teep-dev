@@ -64,6 +64,19 @@ teep-dev-sgx:
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
         - docker push ${REPO}:sgx
 
+# Job for sgx, branch wip
+teep-dev-sgx:
+    <<: *tamproto_service
+    variables:
+        BRANCH: cleanup-before-publish
+    tags:
+        - shell115
+    stage: test
+    script:
+        - docker pull trasioteam/taref-dev:sgx
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
+        - docker push ${REPO}:sgx
+
 # Job for optee
 teep-dev-optee:
     <<: *tamproto_service
@@ -77,6 +90,19 @@ teep-dev-optee:
         - docker build --no-cache --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
         - docker push ${REPO}:optee
 
+# Job for optee, branch wip
+teep-dev-optee:
+    <<: *tamproto_service
+    variables:
+        BRANCH: cleanup-before-publish
+    tags:
+        - shell117
+    stage: test
+    script:
+        - docker pull trasioteam/taref-dev:optee
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
+        - docker push ${REPO}:optee
+
 # Job for keystone
 teep-dev-keystone:
     <<: *tamproto_service
@@ -88,4 +114,17 @@ teep-dev-keystone:
     script:
         - docker pull trasioteam/taref-dev:keystone
         - docker build --no-cache --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
+        - docker push ${REPO}:keystone
+
+# Job for keystone, branch wip
+teep-dev-keystone:
+    <<: *tamproto_service
+    variables:
+        BRANCH: cleanup-before-publish
+    tags:
+        - shell121
+    stage: test
+    script:
+        - docker pull trasioteam/taref-dev:keystone
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
         - docker push ${REPO}:keystone

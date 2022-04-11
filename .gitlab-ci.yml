@@ -14,10 +14,11 @@ before_script:
 # Template for tamproto service
 .tamproto_service: &tamproto_service
     before_script:
-        - docker run --rm --name tamproto-$((RANDOM % 100)) --detach ${REPO}:tamproto
-        - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' tamproto)
+        - TAG_NAME=tamproto-$((RANDOM % 100))
+        - docker run --rm --name ${TAG_NAME} --detach ${REPO}:tamproto
+        - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${TAG_NAME})
     after_script:
-        - docker stop tamproto-$((RANDOM % 100))
+        - docker stop ${TAG_NAME}
 
 # Job for tamproto
 teep-dev-tamproto:

@@ -19,6 +19,7 @@ before_script:
         - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${TAG_NAME})
     after_script:
         - docker stop ${TAG_NAME}
+        - docker rm ${TAG_NAME}
 
 # Job for tamproto
 teep-dev-tamproto:

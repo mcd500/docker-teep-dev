@@ -27,7 +27,7 @@ teep-dev-tamproto:
         BRANCH: master
     stage: build
     tags:
-        - shell115
+        - fast-shells
     script:
         - docker build --build-arg BRANCH=${BRANCH} --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:tamproto ./tamproto/master
         - docker push ${REPO}:tamproto
@@ -37,7 +37,7 @@ teep-dev-doxygen:
     variables:
         BRANCH: master
     tags:
-        - shell117
+        - fast-shells
     stage: build
     script:
         - docker pull trasioteam/taref-dev:doxygen
@@ -59,7 +59,7 @@ teep-dev-sgx:
     variables:
         BRANCH: master
     tags:
-        - shell115
+        - fast-shells
     stage: test
     script:
         - docker pull trasioteam/taref-dev:sgx
@@ -72,7 +72,7 @@ teep-dev-sgx-wip:
     variables:
         BRANCH: cleanup-before-publish
     tags:
-        - shell115
+        - fast-shells
     stage: test
     script:
         - docker pull trasioteam/taref-dev:sgx
@@ -85,7 +85,7 @@ teep-dev-optee:
     variables:
         BRANCH: master
     tags:
-        - shell117
+        - fast-shells
     stage: test
     script:
         - docker pull trasioteam/taref-dev:optee
@@ -98,7 +98,7 @@ teep-dev-optee-wip:
     variables:
         BRANCH: cleanup-before-publish
     tags:
-        - shell117
+        - fast-shells
     stage: test
     script:
         - docker pull trasioteam/taref-dev:optee
@@ -111,7 +111,7 @@ teep-dev-keystone:
     variables:
         BRANCH: master
     tags:
-        - shell121
+        - fast-shells
     stage: test
     script:
         - docker pull trasioteam/taref-dev:keystone
@@ -124,7 +124,7 @@ teep-dev-keystone-wip:
     variables:
         BRANCH: cleanup-before-publish
     tags:
-        - shell121
+        - fast-shells
     stage: test
     script:
         - docker pull trasioteam/taref-dev:keystone

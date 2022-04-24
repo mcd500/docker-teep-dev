@@ -1,4 +1,5 @@
 variables:
+    GIT_SUBMODULE_STRATEGY: recursive
     REPO: trasioteam/teep-dev
     TEEP_DEV_DOCS_DIR: /home/user/teep-device/docs
     TEEP_DEV_PDF: teep-device.pdf
@@ -89,7 +90,7 @@ teep-dev-optee:
     stage: test
     script:
         - docker pull trasioteam/taref-dev:optee
-        - docker build --no-cache --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
         - docker push ${REPO}:optee
 
 # Job for optee, branch wip
@@ -115,7 +116,7 @@ teep-dev-keystone:
     stage: test
     script:
         - docker pull trasioteam/taref-dev:keystone
-        - docker build --no-cache --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
         - docker push ${REPO}:keystone
 
 # Job for keystone, branch wip

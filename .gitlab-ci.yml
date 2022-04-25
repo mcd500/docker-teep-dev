@@ -6,8 +6,8 @@ variables:
     TEEP_HTML_PKG: teep-device_readme_html.tar.gz
 
 stages:
-    - build
-    - test
+    - tamproto
+    - teep
 
 before_script:
     - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWD}
@@ -26,7 +26,7 @@ before_script:
 teep-dev-tamproto:
     variables:
         BRANCH: master
-    stage: build
+    stage: tamproto
     tags:
         - fast-shells
     script:
@@ -39,7 +39,7 @@ teep-dev-doxygen:
         BRANCH: master
     tags:
         - fast-shells
-    stage: build
+    stage: teep
     script:
         - docker pull trasioteam/taref-dev:doxygen
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/${BRANCH}
@@ -61,7 +61,7 @@ teep-dev-sgx:
         BRANCH: master
     tags:
         - fast-shells
-    stage: test
+    stage: teep
     script:
         - docker pull trasioteam/taref-dev:sgx
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
@@ -74,7 +74,7 @@ teep-dev-sgx-wip:
         BRANCH: cleanup-before-publish
     tags:
         - fast-shells
-    stage: test
+    stage: teep
     script:
         - docker pull trasioteam/taref-dev:sgx
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx-wip ./sgx/branch-wip
@@ -87,7 +87,7 @@ teep-dev-optee:
         BRANCH: master
     tags:
         - fast-shells
-    stage: test
+    stage: teep
     script:
         - docker pull trasioteam/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
@@ -100,7 +100,7 @@ teep-dev-optee-wip:
         BRANCH: cleanup-before-publish
     tags:
         - fast-shells
-    stage: test
+    stage: teep
     script:
         - docker pull trasioteam/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee-wip ./optee/branch-wip
@@ -113,7 +113,7 @@ teep-dev-keystone:
         BRANCH: master
     tags:
         - fast-shells
-    stage: test
+    stage: teep
     script:
         - docker pull trasioteam/taref-dev:keystone
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
@@ -126,7 +126,7 @@ teep-dev-keystone-wip:
         BRANCH: cleanup-before-publish
     tags:
         - fast-shells
-    stage: test
+    stage: teep
     script:
         - docker pull trasioteam/taref-dev:keystone
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip ./keystone/branch-wip

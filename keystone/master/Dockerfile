@@ -36,6 +36,5 @@ RUN make
 # Test the teep device
 # This step needs tamproto to be executed
 ARG TAMIP=
-RUN set -eu
-RUN make test TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
+RUN set -eu; make test TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
 

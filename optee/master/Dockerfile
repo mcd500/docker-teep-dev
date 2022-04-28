@@ -44,5 +44,6 @@ RUN make optee_install_qemu
 # Test the teep device
 # This step needs tamproto to be executed
 ARG TAMIP=
-RUN set -eu; make test TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
+SHELL ["/bin/bash", "-c"]
+RUN set -eu -o pipefail; make test TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
 

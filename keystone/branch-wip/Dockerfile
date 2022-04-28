@@ -12,7 +12,6 @@ RUN git config --global credential.helper 'store --file ~/.git-credentials'
 RUN echo https://gitlab-ci-token:${CI_JOB_TOKEN}@192.168.100.100:443 >> ~/.git-credentials
 RUN echo https://gitlab-ci-token:${CI_JOB_TOKEN}@192.168.100.100 >> ~/.git-credentials
 
-
 # Set TEEP_DEV_DIR dir
 ENV TEEP_DEV_DIR=${USER_DIR}/teep-device
 
@@ -41,5 +40,6 @@ RUN make
 # Test the teep device
 # This step needs tamproto to be executed
 ARG TAMIP=
+RUN set -e; set -o pipefail
 RUN make test TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
 

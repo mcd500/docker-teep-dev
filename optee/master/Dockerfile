@@ -39,7 +39,7 @@ WORKDIR $TEEP_DEV_DIR
 RUN make
 
 # Install the TA on qemu
-RUN make optee_install_qemu
+# RUN make optee_install_qemu
 
 # Test the teep device
 # This step needs tamproto to be executed

@@ -71,7 +71,7 @@ teep-dev-sgx:
 teep-dev-sgx-wip:
     <<: *tamproto_service
     variables:
-        BRANCH: cleanup-before-publish
+        BRANCH: cose-try
     tags:
         - fast-shells
     stage: teep
@@ -97,7 +97,7 @@ teep-dev-optee:
 teep-dev-optee-wip:
     <<: *tamproto_service
     variables:
-        BRANCH: cleanup-before-publish
+        BRANCH: cose-try
     tags:
         - fast-shells
     stage: teep
@@ -123,7 +123,7 @@ teep-dev-keystone:
 teep-dev-keystone-wip:
     <<: *tamproto_service
     variables:
-        BRANCH: cleanup-before-publish
+        BRANCH: cose-try
     tags:
         - fast-shells
     stage: teep

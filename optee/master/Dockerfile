@@ -45,5 +45,5 @@ RUN make optee_install_qemu
 # This step needs tamproto to be executed
 ARG TAMIP=
 SHELL ["/bin/bash", "-c"]
-RUN set -eu -o pipefail; make test TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
+RUN set -eu -o pipefail; make run-sample-session TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
 

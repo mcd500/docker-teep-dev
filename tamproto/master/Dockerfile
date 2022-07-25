@@ -27,7 +27,7 @@ RUN git checkout ${BRANCH}
 # Perform the steps as per tamproto repo dockerfile below #
 ###########################################################
 
-FROM node:10.18-alpine as slim
+FROM node:lts-alpine as slim
 
 # Set TAMPROTO_DIR dir
 ENV TAMPROTO_DIR=/home/user/tamproto
@@ -40,7 +40,7 @@ ENV NODE_ENV $NODE_ENV
 
 # COPY package.json /usr/src/app/
 
-RUN apk add --no-cache --virtual .gyp python make g++ \
+RUN apk add --no-cache --virtual .gyp python3 make g++ \
     && apk --no-cache add avahi-dev \
     && npm install \
     && apk del .gyp

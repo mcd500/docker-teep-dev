@@ -30,7 +30,7 @@ RUN git submodule sync --recursive && git submodule update --init --recursive
 WORKDIR $TEEP_DEV_DIR
 
 # Set the TEE to pc for SGX
-ENV TEE=pc
+ENV TEE=sgx
 
 # Build the teep device
 RUN make

@@ -137,5 +137,6 @@ teep-dev-keystone-wip:
     script:
         - docker pull aistcpsec/taref-dev:keystone
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip ./keystone/branch-wip
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip 
+          ./keystone/branch-wip
         - docker push ${REPO}:keystone-wip

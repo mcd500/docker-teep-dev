@@ -15,6 +15,7 @@ before_script:
 # Template for tamproto service
 .tamproto_service: &tamproto_service
     before_script:
+        - docker pull ${REPO}:tamproto
         - TAG_NAME=tamproto-${CI_JOB_ID}
         - docker run --rm --name ${TAG_NAME} --detach ${REPO}:tamproto
         - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${TAG_NAME})

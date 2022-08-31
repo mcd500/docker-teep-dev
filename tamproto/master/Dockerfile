@@ -22,6 +22,9 @@ ARG BRANCH=
 RUN git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@192.168.100.100/rinkai/tamproto.git
 WORKDIR $TAMPROTO_DIR
 RUN git checkout ${BRANCH}
+# Temporary roll back to old tamproto, since teep-device is behind supporting
+# new cipher suite
+RUN git checkout fb1961bc964857384c9ed8696c0d5fc0a76a319d
 
 ###########################################################
 # Perform the steps as per tamproto repo dockerfile below #

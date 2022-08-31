@@ -30,7 +30,8 @@ teep-dev-tamproto:
     tags:
         - fast-shells
     script:
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:tamproto ./tamproto/master
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:tamproto ./tamproto/master
         - docker push ${REPO}:tamproto
 
 # Job for doxygen
@@ -42,7 +43,8 @@ teep-dev-doxygen:
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:doxygen
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/${BRANCH}
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/${BRANCH}
         - docker push ${REPO}:doxygen
         - docker run --name $CI_PIPELINE_ID -d ${REPO}:doxygen
         - docker wait $CI_PIPELINE_ID
@@ -64,7 +66,8 @@ teep-dev-sgx:
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:sgx
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
         - docker push ${REPO}:sgx
 
 # Job for sgx, branch wip
@@ -77,7 +80,8 @@ teep-dev-sgx-wip:
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:sgx
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx-wip ./sgx/branch-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx-wip ./sgx/branch-wip
         - docker push ${REPO}:sgx-wip
 
 # Job for optee
@@ -90,7 +94,8 @@ teep-dev-optee:
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
         - docker push ${REPO}:optee
 
 # Job for optee, branch wip
@@ -103,7 +108,8 @@ teep-dev-optee-wip:
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee-wip ./optee/branch-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee-wip ./optee/branch-wip
         - docker push ${REPO}:optee-wip
 
 # Job for keystone
@@ -116,7 +122,8 @@ teep-dev-keystone:
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
         - docker push ${REPO}:keystone
 
 # Job for keystone, branch wip
@@ -129,5 +136,7 @@ teep-dev-keystone-wip:
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip ./keystone/branch-wip
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip 
+          ./keystone/branch-wip
         - docker push ${REPO}:keystone-wip

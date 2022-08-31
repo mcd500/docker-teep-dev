@@ -31,7 +31,7 @@ WORKDIR $TEEP_DEV_DIR
 
 # Set the TEE to pc for SGX
 #ENV TEE=sgx
-MACHINE=SIM
+ENV MACHINE=SIM
 
 # Build the teep device
 RUN make

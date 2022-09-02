@@ -35,6 +35,10 @@ RUN git submodule sync --recursive && git submodule update --init --recursive
 # Set the workdir
 WORKDIR $TEEP_DEV_DIR
 
+# Must provide the IP address of tamproto before the make
+ARG TAMIP=
+ENV TAM_URL="http://$TAMIP:8888"
+
 # Build the teep device
 RUN make
 
@@ -43,7 +47,6 @@ RUN make
 
 # Test the teep device
 # This step needs tamproto to be executed
-ARG TAMIP=
 SHELL ["/bin/bash", "-c"]
-RUN set -eu -o pipefail; make run-sample-session TAM_URL="http://${TAMIP}:8888" | tr -d "\r"
+RUN set -eu -o pipefail; make run-sample-session | tr -d "\r"
 

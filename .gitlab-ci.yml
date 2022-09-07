@@ -8,6 +8,7 @@ variables:
 stages:
     - tamproto
     - teep
+    - create_rootfs
 
 before_script:
     - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWD}
@@ -141,3 +142,36 @@ teep-dev-keystone-wip:
           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip 
           ./keystone/branch-wip
         - docker push ${REPO}:keystone-wip
+
+# Job for push tamproto, ta-ref and teep-device into rootfs
+teep-dev-optee-3.10.0_rpi3_netboot_nfs:
+    <<: *tamproto_service
+    tags:
+        - shell117
+    stage: create_rootfs
+    variables:
+        NETBOOT_CONT_NME: rootfs-tar-container
+        ROOTFS_FILE: arm64-20.04-rootfs-teep-device.tar.xz
+    script:
+        - docker pull aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_nfs
+        - docker pull aistcpsec/taref-dev:optee
+        - docker build --rm -t ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
+           --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN}
+           ./optee/3.10.0_rpi3_netboot_nfs
+        -  docker push ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
+        - for i in {1..5}; do docker stop $NETBOOT_CONT_NME || true; done 
+        - docker rm $NETBOOT_CONT_NME || true
+        - docker run --name $NETBOOT_CONT_NME -itd ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
+        - docker cp $NETBOOT_CONT_NME:/${ROOTFS_FILE} $CI_PROJECT_DIR/${ROOTFS_FILE}
+        - for i in {1..5}; do docker stop $NETBOOT_CONT_NME || true; done
+        - docker rm $NETBOOT_CONT_NME || true
+    artifacts:
+        paths:
+            - $CI_PROJECT_DIR/${ROOTFS_FILE}
+        expire_in: 1 week
+
+    artifacts:
+            paths:
+                - $(pwd)/optee/3.10.0_rpi3_netboot_nfs/${ROOTFS_FILE}
+            expire_in: 1 week
+

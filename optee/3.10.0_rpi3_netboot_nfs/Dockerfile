@@ -75,21 +75,21 @@ RUN mkdir -p ${ROOTFS_EXT_DIR}
 COPY --from=optee_rootfs_tar /arm64-20.04-rootfs-optee.tar.xz ${USER_DIR}/
 
 # Unzip the tar file to the rootfs extension directory
-RUN tar -xf arm64-20.04-rootfs-optee.tar.xz -C ${ROOTFS_EXT_DIR}
+RUN sudo tar -xf arm64-20.04-rootfs-optee.tar.xz -C ${ROOTFS_EXT_DIR}
 
 # Removed the existing tar file
 RUN rm -rf arm64-20.04-rootfs-optee.tar.xz
 
 # Copy ta-ref, teep-device and tamproto into root directory
-RUN mkdir -p ${ROOTFS_EXT_DIR}/root/teep-device && \
-	mkdir -p ${ROOTFS_EXT_DIR}/root/ta-ref && \
-	mkdir -p ${ROOTFS_EXT_DIR}/root/tamproto
+RUN sudo mkdir -p ${ROOTFS_EXT_DIR}/root/teep-device && \
+	sudo mkdir -p ${ROOTFS_EXT_DIR}/root/ta-ref && \
+	sudo mkdir -p ${ROOTFS_EXT_DIR}/root/tamproto
 
 # Copy ta-ref, teep-device and tamproto to rootfs
-RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/root/tamproto && \
-	cp -r ${USER_DIR}/ta-ref ${ROOTFS_EXT_DIR}/root/ta-ref && \
-    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device
+RUN sudo cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/root/tamproto && \
+	sudo cp -r ${USER_DIR}/ta-ref ${ROOTFS_EXT_DIR}/root/ta-ref && \
+    sudo cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device
 
 # Create a new tar file and move to root directory
-RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \
+RUN sudo tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \
 	arm64-20.04-rootfs && sudo mv arm64-20.04-rootfs-teep-device.tar.xz /

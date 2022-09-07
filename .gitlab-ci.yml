@@ -6,8 +6,8 @@ variables:
     TEEP_HTML_PKG: teep-device_readme_html.tar.gz
 
 stages:
-    - tamproto
-    - teep
+    # - tamproto
+    # - teep
     - create_rootfs
 
 before_script:

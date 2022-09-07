@@ -68,14 +68,12 @@ WORKDIR $USER_DIR
 
 # Create a rootfs extraction directory to extract and zip it again
 ENV ROOTFS_EXT_DIR=${USER_DIR}/arm64-20.04-rootfs
-RUN mkdir -p ${ROOTFS_EXT_DIR}
-
 
 # Copy the Rootfs tar file from the builder
 COPY --from=optee_rootfs_tar /arm64-20.04-rootfs-optee.tar.xz ${USER_DIR}/
 
 # Unzip the tar file to the rootfs extension directory
-RUN sudo tar -xf arm64-20.04-rootfs-optee.tar.xz -C ${ROOTFS_EXT_DIR}
+RUN sudo tar -xf arm64-20.04-rootfs-optee.tar.xz -C ${USER_DIR}
 
 # Removed the existing tar file
 RUN rm -rf arm64-20.04-rootfs-optee.tar.xz

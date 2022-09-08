@@ -60,6 +60,16 @@ WORKDIR $TAMPROTO_DIR
 # new cipher suite
 RUN git checkout fb1961bc964857384c9ed8696c0d5fc0a76a319d
 
+# Lets Install npm and nodejs
+RUN sudo apt-get update  && \
+	curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash  && \
+	source ~/.nvm/nvm.sh  && \
+	nvm install --lts  && \
+	nvm use --lts
+
+# Lets install the required modules for tamproto
+RUN npm install
+
 # By this time, we have tamproto, ta-ref and teep-device inside /home/user directory
 # Lets perform the rootfs operation
 

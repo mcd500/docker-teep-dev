@@ -62,6 +62,7 @@ RUN git checkout fb1961bc964857384c9ed8696c0d5fc0a76a319d
 
 # Lets Install npm and nodejs
 RUN sudo apt-get update  && \
+	sudo apt-get install npm && \
 	curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 SHELL ["/bin/bash", "-c"]
 RUN source ~/.nvm/nvm.sh  && \

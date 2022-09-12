@@ -7,7 +7,7 @@ ROOTFS_EXT_DIR=${USER_DIR}/arm64-20.04-rootfs
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'apt-get update'
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'apt-get install -y npm'
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
-chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'source ~/.nvm/nvm.sh'
+chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'source $HOME/.nvm/nvm.sh'
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'nvm install --lts'
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'nvm use --lts'
 

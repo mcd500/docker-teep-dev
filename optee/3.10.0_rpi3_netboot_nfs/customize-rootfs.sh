@@ -7,9 +7,9 @@ ROOTFS_EXT_DIR=${USER_DIR}/arm64-20.04-rootfs
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'apt-get update'
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'apt-get install -y npm'
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash'
-chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'source $HOME/.nvm/nvm.sh'
-chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'nvm install --lts'
-chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'nvm use --lts'
+chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'source $HOME/.nvm/nvm.sh && nvm install --lts && nvm use --lts'
+# chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'nvm install --lts'
+# chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'nvm use --lts'
 
 # Booting tee-supplicant on power
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'

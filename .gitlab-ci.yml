@@ -155,10 +155,10 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
     script:
         - docker pull aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_nfs
         - docker pull aistcpsec/taref-dev:optee
-        - docker build --rm -t ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
-           --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN}
-           ./optee/3.10.0_rpi3_netboot_nfs
-        - docker push ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
+        # - docker build --rm -t ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
+        #    --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN}
+        #    ./optee/3.10.0_rpi3_netboot_nfs
+        # - docker push ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
         - for i in {1..5}; do docker stop $NETBOOT_CONT_NME || true; done 
         - docker rm $NETBOOT_CONT_NME || true
         - docker run --privileged --cap-add=SYS_CHROOT --name $NETBOOT_CONT_NME

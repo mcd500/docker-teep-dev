@@ -154,7 +154,7 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
         ROOTFS_FILE: arm64-20.04-rootfs-teep-device.tar.xz
     script:
         - docker pull aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_nfs
-        - docker pull aistcpsec/taref-dev:optee
+        - docker pull aistcpsec/teep-dev:optee
         - docker build --rm -t ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
            --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN}
            ./optee/3.10.0_rpi3_netboot_nfs

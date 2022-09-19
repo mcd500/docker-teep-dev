@@ -1,4 +1,4 @@
-FROM trasioteam/taref-dev:doxygen AS build
+FROM aistcpsec/tee-distro-dev:doxygen-20.04 AS build
 # TO trasioteam/teep-dev:doxygen
 
 # Make sure the following command run as build-user

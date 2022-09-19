@@ -164,11 +164,13 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
         - docker run --privileged --cap-add=SYS_CHROOT --name $NETBOOT_CONT_NME
            -v $(pwd)/optee/3.10.0_rpi3_netboot_nfs:/mnt
            ${REPO}:rootfs_teep-device_rpi3_netboot_nfs /bin/bash
-           -c "cp /arm64-20.04-rootfs-teep-device.tar.xz /mnt/"            
+           -c "/mnt/customize-rootfs.sh > /mnt/net-nfs.log &&
+               cp /arm64-20.04-rootfs-teep-device.tar.xz /mnt/"            
         # - docker run --name $NETBOOT_CONT_NME -itd ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
         # - docker cp $NETBOOT_CONT_NME:/${ROOTFS_FILE} $CI_PROJECT_DIR/${ROOTFS_FILE}
         - for i in {1..5}; do docker stop $NETBOOT_CONT_NME || true; done
         - docker rm $NETBOOT_CONT_NME || true
+        - docker push ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
     artifacts:
         paths:
             - $(pwd)/optee/3.10.0_rpi3_netboot_nfs/${ROOTFS_FILE}

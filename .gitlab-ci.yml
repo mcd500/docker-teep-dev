@@ -44,7 +44,7 @@ teep-dev-doxygen:
         - fast-shells
     stage: teep
     script:
-        - docker pull aistcpsec/taref-dev:doxygen
+        - docker pull aistcpsec/tee-distro-dev:doxygen-20.04
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
           CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/${BRANCH}
         - docker push ${REPO}:doxygen

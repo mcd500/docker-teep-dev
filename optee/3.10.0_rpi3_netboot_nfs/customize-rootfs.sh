@@ -5,6 +5,9 @@ ROOTFS_EXT_DIR=${USER_DIR}/arm64-20.04-rootfs
 
 # Start the service to enable network
 # Must be before and network access
+cp /mnt/20-wired.network ${ROOTFS_EXT_DIR}/etc/systemd/network/
+chmod 644 ${ROOTFS_EXT_DIR}/etc/systemd/network/20-wired.network
+
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'systemctl enbale systemd-networkd'
 # chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'echo nameserver 8.8.8.8 > /etc/resolv.conf'
 

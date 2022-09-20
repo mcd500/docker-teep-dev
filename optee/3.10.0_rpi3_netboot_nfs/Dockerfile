@@ -62,6 +62,8 @@ ENV ROOTFS_EXT_DIR=${USER_DIR}/arm64-20.04-rootfs
 # Copy the Rootfs tar file from the builder
 COPY --from=optee_rootfs_tar /arm64-20.04-rootfs-optee.tar.xz ${USER_DIR}/
 
+COPY install_node.sh ${USER_DIR}/
+
 USER root
 
 # Unzip the tar file to the rootfs extension directory
@@ -78,7 +80,8 @@ RUN mkdir -p ${ROOTFS_EXT_DIR}/root/teep-device && \
 # Copy ta-ref, teep-device and tamproto to rootfs
 RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/root/tamproto && \
 	cp -r ${USER_DIR}/ta-ref ${ROOTFS_EXT_DIR}/root/ta-ref && \
-    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device
+    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device \
+	cp ${USER_DIR}/install_node.sh ${ROOTFS_EXT_DIR}/root/
 
 # Create a new tar file and move to root directory
 RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \

@@ -80,7 +80,7 @@ RUN mkdir -p ${ROOTFS_EXT_DIR}/root/teep-device && \
 # Copy ta-ref, teep-device and tamproto to rootfs
 RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/root/tamproto && \
 	cp -r ${USER_DIR}/ta-ref ${ROOTFS_EXT_DIR}/root/ta-ref && \
-    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device \
+    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device && \
 	cp ${USER_DIR}/install_node.sh ${ROOTFS_EXT_DIR}/root/install_node.sh
 
 # Create a new tar file and move to root directory

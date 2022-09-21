@@ -38,20 +38,6 @@ WORKDIR $TAMPROTO_DIR
 # new cipher suite
 RUN git checkout fb1961bc964857384c9ed8696c0d5fc0a76a319d
 
-# # Lets Install npm and nodejs
-# RUN sudo apt-get update  && \
-# 	sudo apt-get install -y npm && \
-# 	curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-# SHELL ["/bin/bash", "-c"]
-# RUN source ~/.nvm/nvm.sh  && \
-# 	nvm install --lts  && \
-# 	nvm use --lts
-
-# Lets install the required modules for tamproto
-# RUN npm install
-
-# By this time, we have tamproto, ta-ref and teep-device inside /home/user directory
-# Lets perform the rootfs operation
 
 # Set the work directory
 WORKDIR $USER_DIR
@@ -61,8 +47,6 @@ ENV ROOTFS_EXT_DIR=${USER_DIR}/arm64-20.04-rootfs
 
 # Copy the Rootfs tar file from the builder
 COPY --from=optee_rootfs_tar /arm64-20.04-rootfs-optee.tar.xz ${USER_DIR}/
-
-COPY install_node.sh ${USER_DIR}/
 
 USER root
 
@@ -80,8 +64,10 @@ RUN mkdir -p ${ROOTFS_EXT_DIR}/root/teep-device && \
 # Copy ta-ref, teep-device and tamproto to rootfs
 RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/root/tamproto && \
 	cp -r ${USER_DIR}/ta-ref ${ROOTFS_EXT_DIR}/root/ta-ref && \
-    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device && \
-	cp ${USER_DIR}/install_node.sh ${ROOTFS_EXT_DIR}/root/tamproto/install_node.sh
+    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device
+
+# Copy the install_node.sh file into tamproto folder
+COPY install_node.sh ${ROOTFS_EXT_DIR}/root/tamproto/
 
 # Create a new tar file and move to root directory
 RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \

@@ -145,7 +145,6 @@ teep-dev-keystone-wip:
 
 # Job for push tamproto, ta-ref and teep-device into rootfs
 teep-dev-optee-3.10.0_rpi3_netboot_nfs:
-    <<: *tamproto_service
     tags:
         - shell117
     stage: create_rootfs

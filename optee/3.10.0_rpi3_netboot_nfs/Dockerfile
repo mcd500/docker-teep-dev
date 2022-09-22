@@ -68,6 +68,7 @@ RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/root/tamproto && \
 
 # Copy the install_node.sh file into tamproto folder
 COPY install_node.sh ${ROOTFS_EXT_DIR}/root/tamproto/
+RUN chmod a+x ${ROOTFS_EXT_DIR}/root/tamproto/install_node.sh
 
 # Create a new tar file and move to root directory
 RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \

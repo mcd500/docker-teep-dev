@@ -9,7 +9,7 @@ cp /mnt/20-wired.network ${ROOTFS_EXT_DIR}/etc/systemd/network/
 chmod 644 ${ROOTFS_EXT_DIR}/etc/systemd/network/20-wired.network
 
 chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'systemctl enable systemd-networkd'
-chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'echo nameserver 8.8.8.8 >  ${ROOTFS_EXT_DIR}/etc/resolv.conf' && 'chattr +i ${ROOTFS_EXT_DIR}/etc/resolv.conf'
+# chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'echo nameserver 8.8.8.8 >  ${ROOTFS_EXT_DIR}/etc/resolv.conf' && 'chattr +i ${ROOTFS_EXT_DIR}/etc/resolv.conf'
 
 # Update rootfs tar file
 cd ${USER_DIR}

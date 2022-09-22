@@ -37,111 +37,111 @@ teep-dev-tamproto:
         - docker push ${REPO}:tamproto
 
 # Job for doxygen
-teep-dev-doxygen:
-    variables:
-        BRANCH: master
-    tags:
-        - fast-shells
-    stage: teep
-    script:
-        - docker pull aistcpsec/tee-distro-dev:doxygen-20.04
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/${BRANCH}
-        - docker push ${REPO}:doxygen
-        - docker run --name $CI_PIPELINE_ID -d ${REPO}:doxygen
-        - docker wait $CI_PIPELINE_ID
-        - docker cp $CI_PIPELINE_ID:${TEEP_DEV_DOCS_DIR}/${TEEP_DEV_PDF} $CI_PROJECT_DIR/${TEEP_DEV_PDF}
-        - docker cp $CI_PIPELINE_ID:${TEEP_DEV_DOCS_DIR}/${TEEP_HTML_PKG} $CI_PROJECT_DIR/${TEEP_HTML_PKG}
-    artifacts:
-        paths:
-            - $CI_PROJECT_DIR/${TEEP_DEV_PDF}
-            - $CI_PROJECT_DIR/${TEEP_HTML_PKG}
-        expire_in: 1 week
+# teep-dev-doxygen:
+#     variables:
+#         BRANCH: master
+#     tags:
+#         - fast-shells
+#     stage: teep
+#     script:
+#         - docker pull aistcpsec/tee-distro-dev:doxygen-20.04
+#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --rm -t ${REPO}:doxygen ./doxygen/${BRANCH}
+#         - docker push ${REPO}:doxygen
+#         - docker run --name $CI_PIPELINE_ID -d ${REPO}:doxygen
+#         - docker wait $CI_PIPELINE_ID
+#         - docker cp $CI_PIPELINE_ID:${TEEP_DEV_DOCS_DIR}/${TEEP_DEV_PDF} $CI_PROJECT_DIR/${TEEP_DEV_PDF}
+#         - docker cp $CI_PIPELINE_ID:${TEEP_DEV_DOCS_DIR}/${TEEP_HTML_PKG} $CI_PROJECT_DIR/${TEEP_HTML_PKG}
+#     artifacts:
+#         paths:
+#             - $CI_PROJECT_DIR/${TEEP_DEV_PDF}
+#             - $CI_PROJECT_DIR/${TEEP_HTML_PKG}
+#         expire_in: 1 week
 
-# Job for sgx
-teep-dev-sgx:
-    <<: *tamproto_service
-    variables:
-        BRANCH: master
-    tags:
-        - fast-shells
-    stage: teep
-    script:
-        - docker pull aistcpsec/taref-dev:sgx
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
-        - docker push ${REPO}:sgx
+# # Job for sgx
+# teep-dev-sgx:
+#     <<: *tamproto_service
+#     variables:
+#         BRANCH: master
+#     tags:
+#         - fast-shells
+#     stage: teep
+#     script:
+#         - docker pull aistcpsec/taref-dev:sgx
+#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx ./sgx/${BRANCH}
+#         - docker push ${REPO}:sgx
 
-# Job for sgx, branch wip
-teep-dev-sgx-wip:
-    <<: *tamproto_service
-    variables:
-        BRANCH: cose-try
-    tags:
-        - fast-shells
-    stage: teep
-    script:
-        - docker pull aistcpsec/taref-dev:sgx
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx-wip ./sgx/branch-wip
-        - docker push ${REPO}:sgx-wip
+# # Job for sgx, branch wip
+# teep-dev-sgx-wip:
+#     <<: *tamproto_service
+#     variables:
+#         BRANCH: cose-try
+#     tags:
+#         - fast-shells
+#     stage: teep
+#     script:
+#         - docker pull aistcpsec/taref-dev:sgx
+#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:sgx-wip ./sgx/branch-wip
+#         - docker push ${REPO}:sgx-wip
 
-# Job for optee
-teep-dev-optee:
-    <<: *tamproto_service
-    variables:
-        BRANCH: master
-    tags:
-        - fast-shells
-    stage: teep
-    script:
-        - docker pull aistcpsec/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
-        - docker push ${REPO}:optee
+# # Job for optee
+# teep-dev-optee:
+#     <<: *tamproto_service
+#     variables:
+#         BRANCH: master
+#     tags:
+#         - fast-shells
+#     stage: teep
+#     script:
+#         - docker pull aistcpsec/taref-dev:optee
+#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
+#         - docker push ${REPO}:optee
 
-# Job for optee, branch wip
-teep-dev-optee-wip:
-    <<: *tamproto_service
-    variables:
-        BRANCH: cose-try
-    tags:
-        - fast-shells
-    stage: teep
-    script:
-        - docker pull aistcpsec/taref-dev:optee
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee-wip ./optee/branch-wip
-        - docker push ${REPO}:optee-wip
+# # Job for optee, branch wip
+# teep-dev-optee-wip:
+#     <<: *tamproto_service
+#     variables:
+#         BRANCH: cose-try
+#     tags:
+#         - fast-shells
+#     stage: teep
+#     script:
+#         - docker pull aistcpsec/taref-dev:optee
+#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee-wip ./optee/branch-wip
+#         - docker push ${REPO}:optee-wip
 
-# Job for keystone
-teep-dev-keystone:
-    <<: *tamproto_service
-    variables:
-        BRANCH: master
-    tags:
-        - fast-shells
-    stage: teep
-    script:
-        - docker pull aistcpsec/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
-        - docker push ${REPO}:keystone
+# # Job for keystone
+# teep-dev-keystone:
+#     <<: *tamproto_service
+#     variables:
+#         BRANCH: master
+#     tags:
+#         - fast-shells
+#     stage: teep
+#     script:
+#         - docker pull aistcpsec/taref-dev:keystone
+#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone ./keystone/${BRANCH}
+#         - docker push ${REPO}:keystone
 
-# Job for keystone, branch wip
-teep-dev-keystone-wip:
-    <<: *tamproto_service
-    variables:
-        BRANCH: cose-try
-    tags:
-        - fast-shells
-    stage: teep
-    script:
-        - docker pull aistcpsec/taref-dev:keystone
-        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip 
-          ./keystone/branch-wip
-        - docker push ${REPO}:keystone-wip
+# # Job for keystone, branch wip
+# teep-dev-keystone-wip:
+#     <<: *tamproto_service
+#     variables:
+#         BRANCH: cose-try
+#     tags:
+#         - fast-shells
+#     stage: teep
+#     script:
+#         - docker pull aistcpsec/taref-dev:keystone
+#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:keystone-wip 
+#           ./keystone/branch-wip
+#         - docker push ${REPO}:keystone-wip
 
 # Job for push tamproto, ta-ref and teep-device into rootfs
 teep-dev-optee-3.10.0_rpi3_netboot_nfs:

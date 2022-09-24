@@ -53,6 +53,7 @@ teep-dev-doxygen:
         - docker cp $CI_PIPELINE_ID:${TEEP_DEV_DOCS_DIR}/${TEEP_DEV_PDF} $CI_PROJECT_DIR/${TEEP_DEV_PDF}
         - docker cp $CI_PIPELINE_ID:${TEEP_DEV_DOCS_DIR}/${TEEP_HTML_PKG} $CI_PROJECT_DIR/${TEEP_HTML_PKG}
     artifacts:
+        name: "teep-device-docs"
         paths:
             - $CI_PROJECT_DIR/${TEEP_DEV_PDF}
             - $CI_PROJECT_DIR/${TEEP_HTML_PKG}

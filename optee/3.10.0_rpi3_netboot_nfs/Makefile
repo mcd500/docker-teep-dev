@@ -22,28 +22,32 @@ ifneq ($(DEV),)
 TARGET += write
 endif
 
-.PHONY: all clean bundle write
-
+.PHONY: all
 all: $(TARGET)
 
+.PHONY: clean
 clean:
 	$(RM) $(IMAGE_BIN) $(BOOTLOADER_BIN) $(ROOTFS_BIN)
 
+.PHONY: pull
 pull:
 	sudo apt-get install -y fdisk sshpass
 	docker pull aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_bootloader
 
+.PHONY: write
 write: $(IMAGE_BIN)
 	dd if=$^ of=$(DEV) bs=4096 conv=fsync
 
 # see https://stackoverflow.com/a/20318913
+.PHONY: upload
 upload: $(IMAGE_BIN) $(BOOTLOADER_BIN)
 	tar -Jcf $(IMAGE_COMPRESSED) $^ || test $$? -eq 1
 	sshpass -f $(VC707_PASSWD) scp -o "StrictHostKeyChecking no" \
 	  $(IMAGE_COMPRESSED) vc707@192.168.100.100:/var/www/files/$(UPLOADED_IMAGE_COMPRESSED)
 
+.PHONY: bundle
 bundle: $(BOOTLOADER_BIN) $(IMAGE_BIN)
-	../../scripts/loopdev-run.sh $(IMAGE_BIN) ./write-image.sh $(BOOTLOADER_BIN) $(ROOTFS_BIN)
+	./loopdev-run.sh $(IMAGE_BIN) ./write-image.sh $(BOOTLOADER_BIN)
 	chown $(USERNAME):$(USERNAME) $(IMAGE_BIN)
 
 # rpi3 supports only MBR(Citation needed)

@@ -177,7 +177,7 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
 
 teep-dev-optee_3.10.0_rpi3_netboot_sdimage:
     variables:
-	MAKE_PATH: optee/3.10.0_rpi3_netboot_nfs
+        MAKE_PATH: optee/3.10.0_rpi3_netboot_nfs
     tags:
         - fastshells
     stage: create_rootfs

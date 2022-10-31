@@ -1,0 +1,7 @@
+label: dos
+label-id: 0x00000000
+device: sdimage.bin
+unit: sectors
+
+sdimage.bin1 : start=        2048, size=       65536, type=e, bootable
+sdimage.bin2 : start=       67584, size=   12000000, type=83

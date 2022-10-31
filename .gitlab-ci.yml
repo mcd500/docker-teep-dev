@@ -174,3 +174,14 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
         paths:
             - $(pwd)/optee/3.10.0_rpi3_netboot_nfs/${ROOTFS_FILE}
         expire_in: 1 week
+
+teep-dev-optee_3.10.0_rpi3_netboot_sdimage:
+    variables:
+	MAKE_PATH: optee/3.10.0_rpi3_netboot_nfs
+    tags:
+        - fastshells
+    stage: create_rootfs
+    script:
+        - make pull -C ${MAKE_PATH}
+        - make -C ${MAKE_PATH}
+        - make upload -C ${MAKE_PATH}

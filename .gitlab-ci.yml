@@ -172,7 +172,7 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
         - docker rm $NETBOOT_CONT_NME || true
     artifacts:
         paths:
-            - $(pwd)/optee/3.10.0_rpi3_netboot_nfs/${ROOTFS_FILE}
+            - optee/3.10.0_rpi3_netboot_nfs/${ROOTFS_FILE}
         expire_in: 1 week
 
 teep-dev-optee_3.10.0_rpi3_netboot_sdimage:

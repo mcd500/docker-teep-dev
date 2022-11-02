@@ -13,4 +13,4 @@ chroot ${ROOTFS_EXT_DIR} /bin/bash -c 'systemctl enable systemd-networkd'
 
 # Update rootfs tar file
 cd ${USER_DIR}
-tar -cJf arm64-20.04-rootfs-optee.tar.xz --exclude="dev,proc,sys" arm64-20.04-rootfs && sudo mv arm64-20.04-rootfs-optee.tar.xz /
+tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" arm64-20.04-rootfs && sudo mv arm64-20.04-rootfs-teep-device.tar.xz /

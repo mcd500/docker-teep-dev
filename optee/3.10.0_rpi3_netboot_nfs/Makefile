@@ -57,4 +57,4 @@ $(IMAGE_BIN):
 
 $(BOOTLOADER_BIN):
 	docker run --rm -v $(CURDIR):$(OUT_DIR) aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_bootloader \
-	  cp boot.img $(OUT_DIR)
+	  sudo cp boot.img $(OUT_DIR)

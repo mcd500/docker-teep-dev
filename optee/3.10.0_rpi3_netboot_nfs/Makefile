@@ -31,7 +31,7 @@ clean:
 
 .PHONY: pull
 pull:
-	sudo apt-get install -y fdisk sshpass
+#	sudo apt-get install -y fdisk sshpass
 	docker pull aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_bootloader
 
 .PHONY: write

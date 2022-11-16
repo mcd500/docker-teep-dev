@@ -56,19 +56,17 @@ RUN tar -xf arm64-20.04-rootfs-optee.tar.xz -C ${USER_DIR}
 # Removed the existing tar file
 RUN rm -rf arm64-20.04-rootfs-optee.tar.xz
 
-# Copy ta-ref, teep-device and tamproto into root directory
-RUN mkdir -p ${ROOTFS_EXT_DIR}/root/teep-device && \
-	mkdir -p ${ROOTFS_EXT_DIR}/root/ta-ref && \
-	mkdir -p ${ROOTFS_EXT_DIR}/root/tamproto
+# Create /home/user directory inside rootfs 
+RUN mkdir -p ${ROOTFS_EXT_DIR}/${USER_DIR}
 
 # Copy ta-ref, teep-device and tamproto to rootfs
-RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/root/tamproto && \
-	cp -r ${USER_DIR}/ta-ref ${ROOTFS_EXT_DIR}/root/ta-ref && \
-    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/root/teep-device
+RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/${USER_DIR} && \
+	cp -r ${USER_DIR}/ta-ref ${ROOTFS_EXT_DIR}/${USER_DIR} && \
+    cp -r ${USER_DIR}/teep-device ${ROOTFS_EXT_DIR}/${USER_DIR}
 
 # Copy the install_node.sh file into tamproto folder
-COPY install_node.sh ${ROOTFS_EXT_DIR}/root/tamproto/
-RUN chmod a+x ${ROOTFS_EXT_DIR}/root/tamproto/install_node.sh
+COPY install_node.sh ${ROOTFS_EXT_DIR}/${USER_DIR}
+RUN chmod a+x ${ROOTFS_EXT_DIR}/${USER_DIR}/install_node.sh
 
 # Create a new tar file and move to root directory
 RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \

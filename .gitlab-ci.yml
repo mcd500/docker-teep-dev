@@ -113,7 +113,7 @@ teep-dev-optee-localip-make-only:
     script:
         - docker pull aistcpsec/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${LOCAL_TAM_IP} --rm -t -f ${REPO}:optee ./optee/${BRANCH}/Dockerfile_LocalTamIP
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${LOCAL_TAM_IP} --rm -t ${REPO}:optee -f ./optee/${BRANCH}/Dockerfile_LocalTamIP
         - docker push ${REPO}:optee
 
 # Job for optee, branch wip

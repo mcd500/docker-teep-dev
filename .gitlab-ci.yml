@@ -4,7 +4,7 @@ variables:
     TEEP_DEV_DOCS_DIR: /home/user/teep-device/docs
     TEEP_DEV_PDF: teep-device.pdf
     TEEP_HTML_PKG: teep-device_readme_html.tar.gz
-    LOCAL_TAM_IP: 192.168.100.114
+    LOCAL_TAM_IP: 127.0.0.1
 
 stages:
     - tamproto
@@ -16,6 +16,8 @@ before_script:
 
 # Template for tamproto service
 .tamproto_service: &tamproto_service
+    tags:
+        - shell117
     before_script:
         - docker pull ${REPO}:tamproto
         - TAG_NAME=tamproto-${CI_JOB_ID}
@@ -108,7 +110,7 @@ teep-dev-optee-localip-make-only:
     variables:
         BRANCH: master
     tags:
-        - fast-shells
+        - shell117
     stage: teep
     script:
         - docker pull aistcpsec/taref-dev:optee

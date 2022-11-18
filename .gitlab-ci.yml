@@ -4,7 +4,7 @@ variables:
     TEEP_DEV_DOCS_DIR: /home/user/teep-device/docs
     TEEP_DEV_PDF: teep-device.pdf
     TEEP_HTML_PKG: teep-device_readme_html.tar.gz
-    LOCAL_TAM_IP: 127.0.0.1
+    LOCAL_TAM_IP: 192.168.100.114
 
 stages:
     - tamproto

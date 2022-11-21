@@ -100,21 +100,22 @@ teep-dev-optee:
         - docker pull aistcpsec/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
-        - docker push ${REPO}:optee
+        # - docker push ${REPO}:optee
 
-# Job for optee
-# teep-dev-optee-localip-make-only:
-#     <<: *tamproto_service
-#     variables:
-#         BRANCH: master
-#     tags:
-#         - shell117
-#     stage: teep
-#     script:
-#         - docker pull aistcpsec/taref-dev:optee
-#         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
-#           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${LOCAL_TAM_IP} --rm -t ${REPO}:optee -f ./optee/${BRANCH}/Dockerfile_LocalTamIP .
-#         - docker push ${REPO}:optee
+# Job for optee to only make with local IP
+# This make the teep-device to be executed in RPI3
+teep-dev-optee-localip-make-only:
+    <<: *tamproto_service
+    variables:
+        BRANCH: master
+    tags:
+        - shell117
+    stage: teep
+    script:
+        - docker pull aistcpsec/taref-dev:optee
+        - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
+          CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${LOCAL_TAM_IP} --rm -t ${REPO}:optee -f ./optee/${BRANCH}/Dockerfile_LocalTamIP .
+        - docker push ${REPO}:optee
 
 # Job for optee, branch wip
 teep-dev-optee-wip:

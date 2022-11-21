@@ -38,9 +38,3 @@ RUN make
 
 # This Dockerfile only build the optee with local TAM_IP
 # it does not test the teep-device
-
-# Test the teep device
-# This step needs tamproto to be executed
-SHELL ["/bin/bash", "-c"]
-RUN set -eu -o pipefail; make run-sample-session | tr -d "\r"
-

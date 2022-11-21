@@ -108,6 +108,10 @@ teep-dev-optee-localip-make-only:
     <<: *tamproto_service
     variables:
         BRANCH: master
+        OPTEE_CONT_NME: optee-container
+        KERNEL_IMG: kernel8.img
+        KERNAL_TFTP_IMG: kernel-tftp.img
+        DTB_FILE: bcm2710-rpi-3-b-plus.dtb  
     tags:
         - shell117
     stage: teep
@@ -115,7 +119,23 @@ teep-dev-optee-localip-make-only:
         - docker pull aistcpsec/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${LOCAL_TAM_IP} --rm -t ${REPO}:optee -f ./optee/${BRANCH}/Dockerfile_LocalTamIP .
+
+        - for i in {1..5}; do docker stop $OPTEE_CONT_NME || true; done 
+        - docker rm $OPTEE_CONT_NME || true
+        - docker run --privileged --cap-add=SYS_CHROOT --name $OPTEE_CONT_NME
+           -v $(pwd)/optee/${BRANCH}/:/mnt ${REPO}:optee /bin/bash
+           -c "cp /home/user/optee/out-br/target/boot/${KERNEL_IMG} /mnt/${KERNAL_TFTP_IMG} &&
+               cp /home/user/optee/out-br/target/boot/${DTB_FILE} /mnt/" 
+        - docker commit $OPTEE_CONT_NME ${REPO}:optee
         - docker push ${REPO}:optee
+        - for i in {1..5}; do docker stop $OPTEE_CONT_NME || true; done
+        - docker rm $OPTEE_CONT_NME || true
+    artifacts:
+        paths:
+            - optee/${BRANCH}/${KERNAL_TFTP_IMG}
+            - optee/${BRANCH}/${DTB_FILE}
+        expire_in: 1 week
+
 
 # Job for optee, branch wip
 teep-dev-optee-wip:
@@ -174,7 +194,6 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
         - docker build --rm -t ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
            --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN}
            ./optee/3.10.0_rpi3_netboot_nfs
-        - docker push ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
         - for i in {1..5}; do docker stop $NETBOOT_CONT_NME || true; done 
         - docker rm $NETBOOT_CONT_NME || true
         - docker run --privileged --cap-add=SYS_CHROOT --name $NETBOOT_CONT_NME
@@ -182,8 +201,8 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
            ${REPO}:rootfs_teep-device_rpi3_netboot_nfs /bin/bash
            -c "/mnt/customize-rootfs.sh > /mnt/net-nfs.log &&
                cp /arm64-20.04-rootfs-teep-device.tar.xz /mnt/"            
-        # - docker run --name $NETBOOT_CONT_NME -itd ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
-        # - docker cp $NETBOOT_CONT_NME:/${ROOTFS_FILE} $CI_PROJECT_DIR/${ROOTFS_FILE}
+        - docker commit $NETBOOT_CONT_NME ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
+        - docker push ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
         - for i in {1..5}; do docker stop $NETBOOT_CONT_NME || true; done
         - docker rm $NETBOOT_CONT_NME || true
     artifacts:

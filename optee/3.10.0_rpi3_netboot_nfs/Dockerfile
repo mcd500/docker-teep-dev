@@ -87,6 +87,6 @@ RUN chmod a+x ${ROOTFS_EXT_DIR}/${USER_DIR}/install_node.sh
 COPY cp_ta_to_tamproto.sh ${ROOTFS_EXT_DIR}/${USER_DIR}
 RUN chmod a+x ${ROOTFS_EXT_DIR}/${USER_DIR}/cp_ta_to_tamproto.sh
 
-# Create a new tar file and move to root directory
-RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \
-	arm64-20.04-rootfs && mv arm64-20.04-rootfs-teep-device.tar.xz /
+# # Create a new tar file and move to root directory
+# RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \
+# 	arm64-20.04-rootfs && mv arm64-20.04-rootfs-teep-device.tar.xz /

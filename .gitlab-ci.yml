@@ -100,7 +100,7 @@ teep-dev-optee:
         - docker pull aistcpsec/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${TAMIP} --rm -t ${REPO}:optee ./optee/${BRANCH}
-        # - docker push ${REPO}:optee
+        - docker push ${REPO}:optee
 
 # Job for optee to only make with local IP
 # This make the teep-device to be executed in RPI3
@@ -115,7 +115,7 @@ teep-dev-optee-localip-make-only:
         - docker pull aistcpsec/taref-dev:optee
         - docker build --build-arg BRANCH=${BRANCH} --build-arg DEBUG_DATE=$(date +%s) --build-arg
           CI_JOB_TOKEN=${CI_JOB_TOKEN} --build-arg TAMIP=${LOCAL_TAM_IP} --rm -t ${REPO}:optee -f ./optee/${BRANCH}/Dockerfile_LocalTamIP .
-        - docker push ${REPO}:optee
+        - docker push ${REPO}:optee-tftp
 
 
 # Job for optee, branch wip
@@ -171,7 +171,7 @@ teep-dev-optee-3.10.0_rpi3_netboot_nfs:
         ROOTFS_FILE: arm64-20.04-rootfs-teep-device.tar.xz
     script:
         - docker pull aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_nfs
-        - docker pull aistcpsec/teep-dev:optee
+        - docker pull aistcpsec/teep-dev:optee-tftp
         - docker build --rm -t ${REPO}:rootfs_teep-device_rpi3_netboot_nfs
            --build-arg CI_JOB_TOKEN=${CI_JOB_TOKEN}
            ./optee/3.10.0_rpi3_netboot_nfs

@@ -1,7 +1,7 @@
 FROM aistcpsec/tee-dev:optee-3.10.0_rpi3_netboot_nfs as optee_rootfs_tar
 
 #######################################################################
-FROM aistcpsec/teep-dev:optee AS build
+FROM aistcpsec/teep-dev:optee-tftp AS build
 # TO aistcpsec/teep-dev:rootfs_teep-device_rpi3_netboot_nfs
 
 

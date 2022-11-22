@@ -76,16 +76,13 @@ RUN cp ${OPTEE_BUILD_DIR}/agent/${TEEP_AGENT_TA} ${ROOTFS_EXT_DIR}/lib/optee_arm
 ENV TEEP_BROKER_DIR=teep-broker
 RUN cp -r ${OPTEE_BUILD_DIR}/rootfs-ext/root/${TEEP_BROKER_DIR} ${ROOTFS_EXT_DIR}/${USER_DIR} && \
     cp ${OPTEE_BUILD_DIR}/broker/teep-broker-app ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR} && \
-    cp ${OPTEE_BUILD_DIR}/scripts/get-ip.sh ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR}
+    cp ${OPTEE_BUILD_DIR}/scripts/get-ip.sh ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR} && \
+    cp ${OPTEE_BUILD_DIR}/scripts/cp_ta_to_tamproto.sh ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR}
 
 
 # Copy the install_node.sh file into home directory
 COPY install_node.sh ${ROOTFS_EXT_DIR}/${USER_DIR}
 RUN chmod a+x ${ROOTFS_EXT_DIR}/${USER_DIR}/install_node.sh
-
-# Copy the cp_ta_to_tamproto.sh file into home directory
-COPY cp_ta_to_tamproto.sh ${ROOTFS_EXT_DIR}/${USER_DIR}
-RUN chmod a+x ${ROOTFS_EXT_DIR}/${USER_DIR}/cp_ta_to_tamproto.sh
 
 # # Create a new tar file and move to root directory
 # RUN tar -cJf arm64-20.04-rootfs-teep-device.tar.xz --exclude="dev,proc,sys" \

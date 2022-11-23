@@ -22,8 +22,8 @@ before_script:
         - docker run --rm --name ${TAG_NAME} --detach ${REPO}:tamproto
         - TAMIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${TAG_NAME})
     after_script:
-        - docker stop ${TAG_NAME}
-        - docker rm ${TAG_NAME}
+        - docker stop ${TAG_NAME} || true
+        - docker rm ${TAG_NAME} || true
 
 # Job for tamproto
 teep-dev-tamproto:

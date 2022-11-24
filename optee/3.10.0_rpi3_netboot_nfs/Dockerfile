@@ -75,9 +75,7 @@ RUN cp ${OPTEE_BUILD_DIR}/agent/${TEEP_AGENT_TA} ${ROOTFS_EXT_DIR}/lib/optee_arm
 # Copy the teep-broker-app executable and get-ip.sh to the copied teep-broker-app folder
 ENV TEEP_BROKER_DIR=teep-broker
 RUN cp -r ${OPTEE_BUILD_DIR}/rootfs-ext/root/${TEEP_BROKER_DIR} ${ROOTFS_EXT_DIR}/${USER_DIR} && \
-    cp ${OPTEE_BUILD_DIR}/broker/teep-broker-app ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR} && \
-    cp ${OPTEE_BUILD_DIR}/scripts/get-ip.sh ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR} && \
-    cp ${OPTEE_BUILD_DIR}/scripts/cp_ta_to_tamproto.sh ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR}
+    cp ${OPTEE_BUILD_DIR}/broker/teep-broker-app ${ROOTFS_EXT_DIR}/${USER_DIR}/${TEEP_BROKER_DIR}
 
 
 # Copy the install_node.sh file into home directory

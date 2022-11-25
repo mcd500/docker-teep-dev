@@ -68,8 +68,9 @@ RUN cp -r ${USER_DIR}/tamproto ${ROOTFS_EXT_DIR}/${USER_DIR} && \
 ENV OPTEE_BUILD_DIR=${ROOTFS_EXT_DIR}/${USER_DIR}/teep-device/build/optee
 ENV TEEP_AGENT_TA=68373894-5bb3-403c-9eec-3114a1f5d3fc.ta
 ENV HELLO_TEEP_TA=8d82573a-926d-4754-9353-32dc29997f74.ta
-RUN cp ${OPTEE_BUILD_DIR}/agent/${TEEP_AGENT_TA} ${ROOTFS_EXT_DIR}/lib/optee_armtz/ && \
-	cp ${OPTEE_BUILD_DIR}/hello-tc/${HELLO_TEEP_TA} ${ROOTFS_EXT_DIR}/lib/optee_armtz/
+# RUN cp ${OPTEE_BUILD_DIR}/agent/${TEEP_AGENT_TA} ${ROOTFS_EXT_DIR}/lib/optee_armtz/ && \
+# 	cp ${OPTEE_BUILD_DIR}/hello-tc/${HELLO_TEEP_TA} ${ROOTFS_EXT_DIR}/lib/optee_armtz/
+RUN cp ${OPTEE_BUILD_DIR}/agent/${TEEP_AGENT_TA} ${ROOTFS_EXT_DIR}/lib/optee_armtz/
 
 # Move the teep-broker-app directory to home folder
 # Copy the teep-broker-app executable and get-ip.sh to the copied teep-broker-app folder
